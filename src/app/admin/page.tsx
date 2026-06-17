@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useVMs, useFleetUtilization, useTemplates } from '../../hooks/useApi';
-import { MetricCard } from '../../components/admin/MetricCard';
-import { UtilizationCharts } from '../../components/admin/UtilizationCharts';
-import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
-import { Badge } from '../../components/ui/Badge';
-import { Skeleton } from '../../components/ui/Skeleton';
+import { useVMs} from '@/hooks/useVMs';
+import { useFleetUtilization } from '@/hooks/useFleetUtilization';
+import {  useTemplates } from '@/hooks/useTemplates';
+import { MetricCard } from '@/components/admin/MetricCard';
+import { UtilizationCharts } from '@/components/admin/UtilizationCharts';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { 
   Cpu, 
   Layers, 
@@ -173,7 +175,7 @@ export default function AdminDashboardPage() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Badge variant="danger" className="font-mono">{vm.cpuUsagePercent}% CPU</Badge>
-                  <Link href={`/developer/${vm.id}`} className="text-indigo-650 hover:text-indigo-700 hover:underline font-semibold font-bold">
+                  <Link href={`/developer/${vm.id}`} className="text-indigo-650 hover:text-indigo-700 hover:underline font-bold">
                     Drill down
                   </Link>
                 </div>
@@ -195,7 +197,7 @@ export default function AdminDashboardPage() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Badge variant="warning" className="font-mono">{vm.cpuUsagePercent}% CPU</Badge>
-                  <Link href={`/developer/${vm.id}`} className="text-indigo-650 hover:text-indigo-700 hover:underline font-semibold font-bold">
+                  <Link href={`/developer/${vm.id}`} className="text-indigo-650 hover:text-indigo-700 hover:underline font-bold">
                     Drill down
                   </Link>
                 </div>

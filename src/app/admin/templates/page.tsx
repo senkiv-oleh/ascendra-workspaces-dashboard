@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useTemplates } from '../../../hooks/useApi';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../../../components/ui/Card';
-import { Button } from '../../../components/ui/Button';
-import { Input } from '../../../components/ui/Input';
-import { Select } from '../../../components/ui/Select';
-import { Badge } from '../../../components/ui/Badge';
-import { Skeleton } from '../../../components/ui/Skeleton';
+import { useTemplates } from '@/hooks/useTemplates';
+import { usePolicies } from '@/hooks/usePolicies';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Badge } from '@/components/ui/Badge';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { 
   Plus, 
   Cpu, 
@@ -17,11 +18,15 @@ import {
   DollarSign, 
   X, 
   SlidersHorizontal,
-  Info
+  Info,
+  Shield,
+  Lock,
+  Clock
 } from 'lucide-react';
 
 export default function VmTemplatesPage() {
-  const { templates, loading, createTemplate } = useTemplates();
+  const { templates, loading: templatesLoading, createTemplate } = useTemplates();
+  const { policies, loading: policiesLoading } = usePolicies();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Form States
@@ -99,7 +104,7 @@ export default function VmTemplatesPage() {
       </div>
 
       {/* Templates Grid */}
-      {loading ? (
+      {templatesLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((n) => (
             <div key={n} className="border border-zinc-200 rounded-xl p-6 bg-white animate-pulse h-64" />
@@ -164,6 +169,91 @@ export default function VmTemplatesPage() {
           ))}
         </div>
       )}
+
+      {/* Governance & Resource Policies */}
+      <div className="border-t border-zinc-250 pt-8 mt-12 space-y-6">
+        <div>
+          <h2 className="text-xl font-black tracking-tight flex items-center text-zinc-900">
+            <Shield className="h-5 w-5 mr-2 text-indigo-600" />
+            Active Governance Policies & Quotas
+          </h2>
+          <p className="text-sm text-zinc-500">
+            Global fleet constraints mapping developer profiles and auto-shutdown rules to team structures.
+          </p>
+        </div>
+
+        {policiesLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="border border-zinc-200 rounded-xl p-6 bg-white animate-pulse h-40" />
+            <div className="border border-zinc-200 rounded-xl p-6 bg-white animate-pulse h-40" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {policies.map((policy) => (
+              <Card key={policy.id} className="bg-white border border-zinc-200 hover:border-zinc-350 transition-all duration-200 flex flex-col justify-between">
+                <div>
+                  <CardHeader className="pb-3 border-b border-zinc-100 bg-zinc-50/50">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-base font-bold text-zinc-900 flex items-center">
+                          <Lock className="h-4 w-4 mr-2 text-indigo-500" />
+                          {policy.name}
+                        </CardTitle>
+                        {policy.appliesToTeam && (
+                          <p className="text-[10px] text-indigo-650 font-mono font-bold mt-0.5">
+                            APPLIES TO: {policy.appliesToTeam.toUpperCase()}
+                          </p>
+                        )}
+                      </div>
+                      <Badge variant="outline" className="text-[9px] font-mono border-zinc-250 text-zinc-500 bg-white">
+                        {policy.id}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-4 space-y-3.5 text-xs font-medium">
+                    <div className="flex justify-between items-center py-1 border-b border-zinc-100">
+                      <span className="text-zinc-500">Max VMs Per User</span>
+                      <span className="font-mono font-bold text-zinc-800 bg-zinc-100 px-2 py-0.5 rounded">
+                        {policy.maxVmsPerUser} instances
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center py-1 border-b border-zinc-100">
+                      <span className="text-zinc-500 flex items-center">
+                        <Clock className="h-3.5 w-3.5 mr-1.5 text-zinc-400" /> Idle Auto-Stop Timeout
+                      </span>
+                      <span className="font-mono text-zinc-800 font-semibold">
+                        {policy.idleTimeoutMinutes} minutes ({policy.idleTimeoutMinutes / 60} hrs)
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5 pt-1">
+                      <span className="text-zinc-500 block">Allowed Hardware Profiles</span>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {policy.allowedTemplates.map((tplId) => {
+                          const matchedTpl = templates.find((t) => t.id === tplId);
+                          return (
+                            <Badge 
+                              key={tplId} 
+                              variant="outline" 
+                              className="text-[10px] font-mono border border-zinc-200/60 font-medium py-0.5 bg-zinc-50"
+                            >
+                              {matchedTpl ? matchedTpl.name : tplId}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </CardContent>
+                </div>
+                <CardFooter className="text-[10px] text-zinc-450 border-t border-zinc-100 py-3 bg-zinc-50/50 px-6 mt-4">
+                  Created: {new Date(policy.createdAt).toLocaleDateString()} • System Policy Enforced
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Create Template Drawer Modal */}
       {isModalOpen && (

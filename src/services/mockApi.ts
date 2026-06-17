@@ -1,4 +1,4 @@
-import { VM, VMTemplate, User, FleetUtilization, VMActivityLog, VMStatus, FleetTrendPoint, Policy } from '../types';
+import { VM, VMTemplate, User, FleetUtilization, VMActivityLog, VMStatus, FleetTrendPoint, Policy } from '@/types';
 
 const LATENCY_MS = 400;
 
@@ -486,13 +486,19 @@ export const getPolicies = async (): Promise<Policy[]> => {
       id: 'pol-standard',
       name: 'Standard Developer Policy',
       maxVmsPerUser: 4,
+      idleTimeoutMinutes: 240,
       allowedTemplates: ['tpl-general', 'tpl-memory'],
+      appliesToTeam: 'Engineering',
+      createdAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
     },
     {
       id: 'pol-gpu',
       name: 'AI Engineering GPU Policy',
       maxVmsPerUser: 8,
+      idleTimeoutMinutes: 480,
       allowedTemplates: ['tpl-general', 'tpl-memory', 'tpl-gpu'],
+      appliesToTeam: 'Data Science & AI',
+      createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     },
   ];
 };

@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useVMs, useTemplates } from '../../../hooks/useApi';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/Table';
-import { Input } from '../../../components/ui/Input';
-import { Select } from '../../../components/ui/Select';
-import { Badge } from '../../../components/ui/Badge';
-import { Button } from '../../../components/ui/Button';
-import { Skeleton } from '../../../components/ui/Skeleton';
+import { useVMs } from '@/hooks/useVMs';
+import { useTemplates } from '@/hooks/useTemplates';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { 
   Search, 
   Layers, 

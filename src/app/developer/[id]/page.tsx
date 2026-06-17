@@ -1,13 +1,16 @@
 'use client';
 
 import React, { use, useState } from 'react';
-import { useVMDetail, useVMs, useTemplates, useActivityLogs } from '../../../hooks/useApi';
-import { MetricChart } from '../../../components/developer/MetricChart';
-import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
-import { Badge } from '../../../components/ui/Badge';
-import { Button } from '../../../components/ui/Button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/Table';
-import { Skeleton } from '../../../components/ui/Skeleton';
+import { useVMs } from '@/hooks/useVMs';
+import { useVMDetail } from '@/hooks/useVMDetail';
+import { useTemplates } from '@/hooks/useTemplates';
+import { useActivityLogs } from '@/hooks/useActivityLogs';
+import { MetricChart } from '@/components/developer/MetricChart';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { 
   ArrowLeft, 
   Cpu, 

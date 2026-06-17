@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useVMs, useTemplates } from '../../hooks/useApi';
+import { useVMs } from '@/hooks/useVMs';
+import { useTemplates } from '@/hooks/useTemplates';
+
 import { VmCard } from './VmCard';
 import { Skeleton } from '../ui/Skeleton';
 import { Input } from '../ui/Input';

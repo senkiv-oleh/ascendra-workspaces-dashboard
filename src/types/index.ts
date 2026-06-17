@@ -44,7 +44,10 @@ export interface Policy {
   id: string;
   name: string;
   maxVmsPerUser: number;
+  idleTimeoutMinutes: number;
   allowedTemplates: string[]; // List of VMTemplate IDs allowed under this policy
+  appliesToTeam?: string;
+  createdAt: string;
 }
 
 export interface FleetTrendPoint {
